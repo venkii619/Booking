@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+body
+{
+    margin:0px;
+}
+ngx-material-timepicker-content {
+    z-index: 1051 !important; /* Ensure this is higher than the MatDialog's z-index */
+  }
+  .timepicker-overlay
+  {
+    z-index: 999999 !important;
+  }
+  .timepicker-backdrop-overlay
+  {
+    z-index:100000 !important;
+  }
+  .mat-mdc-form-field-infix 
+  {
+    display: flex !important;
+  }
