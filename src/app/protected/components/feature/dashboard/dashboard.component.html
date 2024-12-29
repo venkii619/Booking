@@ -1,0 +1,84 @@
+<div class="dashboard">
+  <div class="header">
+    <button mat-raised-button color="primary" (click)="openBookingDialog()">
+      Book Meeting
+    </button>
+  </div>
+  <div class="meeting-section">
+    <h3>Your Upcoming Meetings</h3>
+    <table mat-table [dataSource]="upcomingMeetings" class="mat-elevation-z8">
+      <ng-container matColumnDef="srNo">
+        <th mat-header-cell *matHeaderCellDef>Sr No</th>
+        <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+      </ng-container>
+      <ng-container matColumnDef="userName">
+        <th mat-header-cell *matHeaderCellDef>User Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+      </ng-container>
+      <ng-container matColumnDef="agenda">
+        <th mat-header-cell *matHeaderCellDef>Agenda</th>
+        <td mat-cell *matCellDef="let element">{{ element.agenda }}</td>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>Date</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.date | dateFormat }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="time">
+        <th mat-header-cell *matHeaderCellDef>Time</th>
+        <td mat-cell *matCellDef="let element">{{ element.startTime }}</td>
+      </ng-container>
+      <ng-container matColumnDef="room">
+        <th mat-header-cell *matHeaderCellDef>Room</th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          Room #{{ element.room }}
+          <span class="remove" (click)="remove(i)"> Delete</span>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="upcomingColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: upcomingColumns"></tr>
+    </table>
+  </div>
+  <div class="meeting-details-section">
+    <h3>Rooms Meeting Details</h3>
+    <label for="meetingRoom">Select Meeting Room</label>
+    <mat-form-field appearance="fill">
+      <mat-select [(value)]="selectedRoom" (selectionChange)="onRoomChange()">
+        <mat-option *ngFor="let room of rooms" [value]="room.id">{{
+          room.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <table mat-table [dataSource]="roomMeetings" class="mat-elevation-z8">
+      <ng-container matColumnDef="srNo">
+        <th mat-header-cell *matHeaderCellDef>Sr No</th>
+        <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+      </ng-container>
+      <ng-container matColumnDef="userName">
+        <th mat-header-cell *matHeaderCellDef>User Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+      </ng-container>
+      <ng-container matColumnDef="agenda">
+        <th mat-header-cell *matHeaderCellDef>Agenda</th>
+        <td mat-cell *matCellDef="let element">{{ element.agenda }}</td>
+      </ng-container>
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef>Date</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.date | dateFormat }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="time">
+        <th mat-header-cell *matHeaderCellDef>Time</th>
+        <td mat-cell *matCellDef="let element">{{ element.startTime }}</td>
+      </ng-container>
+      <ng-container matColumnDef="room">
+        <th mat-header-cell *matHeaderCellDef>Room</th>
+        <td mat-cell *matCellDef="let element">Room #{{ element.room }}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="roomColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: roomColumns"></tr>
+    </table>
+  </div>
+</div>

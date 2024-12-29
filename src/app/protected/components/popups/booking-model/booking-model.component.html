@@ -1,0 +1,86 @@
+<div class="header">
+  <h2 class="title">Book Meeting</h2>
+  <button aria-label="close dialog" class="close" mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<mat-dialog-content>
+  <form [formGroup]="meetingForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label class="label">User Name</mat-label>
+      <input id="username" formControlName="username" matInput readonly />
+    </mat-form-field>
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label class="label">Meeting Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date" [matDatepickerFilter]="disablePastDates" />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label class="label">Start Time</mat-label>
+        <input
+          matInput
+          [ngxTimepicker]="startPicker"
+          formControlName="startTime"
+        />
+        <ngx-material-timepicker-toggle
+          [for]="startPicker"
+        ></ngx-material-timepicker-toggle>
+        <ngx-material-timepicker #startPicker></ngx-material-timepicker>
+      </mat-form-field>
+      <!-- <input [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly>
+      <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker> -->
+      <mat-form-field appearance="outline">
+        <mat-label class="label">End Time</mat-label>
+        <input matInput [ngxTimepicker]="endPicker" formControlName="endTime" />
+        <ngx-material-timepicker-toggle
+          [for]="endPicker"
+        ></ngx-material-timepicker-toggle>
+        <ngx-material-timepicker #endPicker></ngx-material-timepicker>
+      </mat-form-field>
+    </div>
+    <div class="error-message" *ngIf="showError">
+      **Time should be between 9:00 AM and 6:00 PM. Meeting should be at least
+      30 minutes.
+    </div>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSearchRooms()"
+      [disabled]="!meetingForm.valid"
+      *ngIf="!showRoomSelection"
+    >
+      Search Rooms
+    </button>
+    <!-- Dynamic Fields -->
+    <div *ngIf="showRoomSelection">
+      <mat-form-field appearance="outline">
+        <mat-label class="label">Select Room</mat-label>
+        <mat-select formControlName="room">
+          <mat-option *ngFor="let room of rooms" [value]="room.id">{{
+            room.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label class="label">Agenda</mat-label>
+        <input matInput formControlName="agenda" />
+      </mat-form-field>
+    </div>
+    <button *ngIf="showRoomSelection"
+    mat-raised-button
+    color="primary"
+    type="submit"
+    [disabled]="!meetingForm.valid"
+    (click)="onSubmit()"
+  >
+    Book Meeting
+  </button>
+  </form>
+</mat-dialog-content>
+<!-- <mat-dialog-actions >
+</mat-dialog-actions> -->
